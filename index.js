@@ -47,11 +47,11 @@ function xload(app, options) {
 
         // 更新Content-Disposition
         if (userAgent.indexOf('msie') >= 0 || userAgent.indexOf('chrome') >= 0) {
-          this.set('Content-Disposition', 'attachment; filename=' + encodeURIComponent(file));
+          this.set('Content-Disposition', 'attachment; filename=' + encodeURIComponent(filename));
         } else if (userAgent.indexOf('firefox') >= 0) {
-          this.set('Content-Disposition', 'attachment; filename*="utf8\'\'' + encodeURIComponent(file) + '"');
+          this.set('Content-Disposition', 'attachment; filename*="utf8\'\'' + encodeURIComponent(filename) + '"');
         } else {
-          this.set('Content-Disposition', 'attachment; filename=' + new Buffer(file).toString('binary'));
+          this.set('Content-Disposition', 'attachment; filename=' + new Buffer(filename).toString('binary'));
         }
 
         return yield sendfile(this, filename, config);
