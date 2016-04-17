@@ -45,6 +45,7 @@ function xload(app, options) {
 
         let userAgent = (this.get('user-agent') || '').toLowerCase();
 
+        // 更新Content-Disposition
         if (userAgent.indexOf('msie') >= 0 || userAgent.indexOf('chrome') >= 0) {
           this.set('Content-Disposition', 'attachment; filename=' + encodeURIComponent(file));
         } else if (userAgent.indexOf('firefox') >= 0) {
