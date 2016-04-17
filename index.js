@@ -43,7 +43,17 @@ function xload(app, options) {
           downloadDir: path,
         }, options.upload, opt);
 
-        return yield sendfile(this, filename ,config);
+        let userAgent = (this.get('user-agent') || '').toLowerCase();
+
+        if (userAgent.indexOf('msie') >= 0 || userAgent.indexOf('chrome') >= 0) {
+          this.set('Content-Disposition', 'attachment; filename=' + encodeURIComponent(file));
+        } else if (userAgent.indexOf('firefox') >= 0) {
+          this.set('Content-Disposition', 'attachment; filename*="utf8\'\'' + encodeURIComponent(file) + '"');
+        } else {
+          this.set('Content-Disposition', 'attachment; filename=' + new Buffer(file).toString('binary'));
+        }
+
+        return yield sendfile(this, filename, config);
       }
     });
 
